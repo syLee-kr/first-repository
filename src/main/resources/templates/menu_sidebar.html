@@ -1,0 +1,27 @@
+<div th:fragment="menu_sidebar">
+    <div class="sidebar">
+        <div class="searchMain">
+            <form action="search_url" method="GET">
+                <input type="text" placeholder="검색" class="searchInput" name="query">
+            </form>
+        </div>
+        <ul class="menu">
+            <li><a id="home-button" th:href="@{/home}">
+                <span class="icon"><img th:src="@{/images/홈.png}" alt="홈 아이콘"></span> 홈
+            </a></li>
+            <li><a th:href="@{/shop}"><span class="icon"><img th:src="@{/images/쇼핑.png}" alt="쇼핑 아이콘"></span> 굿즈</a></li>
+            <li><a th:href="@{/messages}"><span class="icon"><img th:src="@{/images/메세지.png}" alt="메세지 아이콘"></span> 메시지</a></li>
+            <li><a th:href="@{/notifications}"><span class="icon"><img th:src="@{/images/알림.png}" alt="알림 아이콘"></span> 알림</a></li>
+            <li>
+                <a href="javascript:void(0);" onclick="openModal(); return false;">
+                    <span class="icon"><img th:src="@{/images/만들기.png}" alt="만들기 아이콘"></span> 만들기
+                </a>
+            </li>
+            <li><a th:href="@{/profile}"><span class="icon"><img th:src="@{/images/프로필.png}" alt="프로필 아이콘"></span> 프로필</a></li>
+            <li><a th:href="@{/more}"><span class="icon"><img th:src="@{/images/설정.png}" alt="설정 아이콘"></span> 설정</a></li>
+        </ul>
+        <div class="logo">
+            <h1><a th:href="@{/login}">Pocket<br>polio</a></h1>
+        </div>
+    </div>
+</div>

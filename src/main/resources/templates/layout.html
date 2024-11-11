@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${pageTitle}">메인 화면</title>
+  <link rel="stylesheet" th:href="@{/css/cartSidebar.css}">
+</head>
+<body>
+
+<!-- 전체 화면 컨테이너 -->
+<div id="container" style="display: flex;">
+
+  <!-- 메인 콘텐츠 영역 -->
+  <div id="main-content" style="flex: 1; padding-right: 300px;">
+    <div th:insert="${mainContent}"></div>
+  </div>
+
+  <!-- 우측 장바구니 툴바 - 다른 페이지에서도 항상 유지됨 -->
+  <div th:replace="fragments/cart-sidebar :: cart-toolbar"></div>
+
+</div>
+
+</body>
+</html>

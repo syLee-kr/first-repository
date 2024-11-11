@@ -1,0 +1,21 @@
+<!-- 장바구니 사이드바 프래그먼트 -->
+<div th:fragment="cart_sidebar">
+  <div id="cart-toolbar" style="width: 300px; position: fixed; right: 0; top: 0; bottom: 0; border-left: 1px solid #ddd; padding: 20px; background: #f9f9f9;">
+    <h2>장바구니</h2>
+    <div th:if="${cartItems != null and #lists.size(cartItems) > 0}">
+      <ul style="list-style-type: none; padding: 0;">
+        <li th:each="item : ${cartItems}" style="margin-bottom: 15px;">
+          <p th:text="${item.product.name}">상품 이름</p>
+          <p>수량: <span th:text="${item.quantity}">1</span></p>
+          <p>가격: <span th:text="${item.product.price * item.quantity}">1000</span>원</p>
+          <button onclick="removeFromCart([[${item.product.id}]])">삭제</button>
+        </li>
+      </ul>
+      <p th:text="'총 합계: ' + ${totalPrice} + '원'">총 합계</p>
+      <button onclick="location.href='/checkout'">결제하기</button>
+    </div>
+    <div th:if="${cartItems == null or #lists.size(cartItems) == 0}">
+      <p>장바구니가 비어 있습니다.</p>
+    </div>
+  </div>
+</div>

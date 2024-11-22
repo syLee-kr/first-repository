@@ -1,0 +1,77 @@
+/* 프로필 페이지 스타일 */
+
+.profile-container {
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    color: #fff;
+    width: 60%;
+    max-width: 500px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.profile-image {
+    margin-bottom: 20px;
+}
+
+.profile-image .profile-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    object-fit: cover;
+}
+
+.profile-details {
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.profile-details p {
+    margin: 10px 0;
+}
+
+.profile-details strong {
+    color: #ddd;
+}
+
+.edit-profile-button {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.edit-profile-button:hover {
+    background-color: #ffffff;
+}
+
+/* 레이아웃 조정 (반응형 디자인) */
+@media screen and (max-width: 768px) {
+    .profile-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .profile-image .profile-img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .edit-profile-button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}

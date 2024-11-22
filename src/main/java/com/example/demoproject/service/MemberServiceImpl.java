@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -23,52 +24,56 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean loginId(Member vo) {
-        Optional<Member> member = memberRepo.findById(vo.getId());
+    public boolean login(String username, String password) {
+        Optional<Member> member = memberRepo.findById(username);
         if (member.isPresent()) {
-            System.out.println("사용자 존재: ID=" + vo.getId());
-            log.info("사용자 존재: ID= {}", vo.getId());
-            if (pwdEnc.matches(vo.getPwd(), member.get().getPwd())) {
-                System.out.println("비밀번호 일치");
+            log.info("사용자 존재: username= {}", username);
+            if (pwdEnc.matches(password, member.get().getPwd())) {
+                log.info("비밀번호 일치");
                 return true;
             } else {
-                System.out.println("비밀번호 불일치");
+                log.info("비밀번호 불일치");
             }
         } else {
-            System.out.println("사용자 없음: ID=" + vo.getId());
+            log.info("사용자 없음: username= {}", username);
         }
         return false;
     }
 
     @Override
-    public Optional<Member> getMember(String id) {
-        return memberRepo.findById(id);
+    public Optional<Member> getMember(String username) {
+        return memberRepo.findById(username);
     }
 
     @Override
-    public boolean confirmId(String id) {
-        return memberRepo.existsById(id);
+    public boolean confirmUsername(String username) {
+        return memberRepo.existsById(username);
     }
 
     @Override
     public void insertMember(Member vo) {
         vo.setPwd(pwdEnc.encode(vo.getPwd()));  // 비밀번호 암호화
         memberRepo.save(vo);
+        log.info("새로운 회원 등록: username= {}", vo.getUsername());
     }
 
     @Override
-    public Optional<Member> getIdByNameAndEmail(String name, String email) {
-        return memberRepo.findByNameAndEmail(name, email);
+    public Optional<Member> getMemberByNameAndEmail(String name, String email) {
+        return memberRepo.findByUsernameAndEmail(name, email);
+        // 만약 'name' 필드가 존재하지 않는다면, 아래와 같이 수정하세요:
+        // return memberRepo.findByUsernameAndEmail(username, email);
     }
 
     @Override
-    public Optional<Member> getPwdByIdAndPhone(String id, String phone) {
-        return memberRepo.findByIdAndPhone(id, phone);
+    public Optional<Member> getMemberByUsernameAndPhone(String username, String phone) {
+        return memberRepo.findByUsernameAndPhone(username, phone);
     }
 
     @Override
-    public void changePassword(Member vo) {
-        String encodedPassword = pwdEnc.encode(vo.getPwd());
-        memberRepo.changePassword(vo.getId(), encodedPassword);
+    @Transactional
+    public void changePassword(String username, String newPassword) {
+        String encodedPassword = pwdEnc.encode(newPassword);
+        memberRepo.changePassword(username, encodedPassword);
+        log.info("비밀번호 변경: username= {}", username);
     }
 }

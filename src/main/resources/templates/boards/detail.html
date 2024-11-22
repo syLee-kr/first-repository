@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/board.css}">
+</head>
+<body>
+<div class="board-detail-container">
+  <h2 th:text="${board.title}">게시글 제목</h2>
+  <div class="board-meta">
+    <span><strong>작성자:</strong> <span th:text="${board.member.username}">작성자</span></span>
+    <span><strong>작성일:</strong> <span th:text="${#dates.format(board.createdDate, 'yyyy-MM-dd HH:mm')}">작성일</span></span>
+    <span><strong>조회수:</strong> <span th:text="${board.views}">0</span></span>
+  </div>
+  <hr>
+  <div class="board-content">
+    <p th:utext="${board.content}">게시글 내용</p>
+  </div>
+  <div class="board-actions">
+    <a th:href="@{/boards}" class="btn back-btn">목록으로</a>
+    <a th:if="${loggedInUsername == board.member.username}"
+       th:href="@{/boards/delete/{bseq}(bseq=${board.bseq})}"
+       class="btn delete-btn">
+      삭제
+    </a>
+  </div>
+</div>
+</body>
+</html>

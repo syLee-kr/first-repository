@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시판</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/board.css}">
+</head>
+<body>
+<div class="board-container">
+  <h2>게시판 목록</h2>
+  <table class="board-table">
+    <thead>
+    <tr>
+      <th>번호</th>
+      <th>제목</th>
+      <th>작성자</th>
+      <th>작성일</th>
+      <th>조회수</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 게시판 데이터 반복 -->
+    <tr th:each="board : ${boards}">
+      <td th:text="${board.bseq}">1</td>
+      <td class="title">
+        <a th:href="@{/boards/{bseq}(bseq=${board.bseq})}" th:text="${board.title}">제목</a>
+      </td>
+      <td th:text="${board.member.username}">작성자</td>
+      <td th:text="${#dates.format(board.createdDate, 'yyyy-MM-dd HH:mm')}">작성일</td>
+      <td th:text="${board.views}">조회수</td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="pagination">
+    <a href="#" class="first">처음</a>
+    <a href="#" class="prev">이전</a>
+    <span class="current">1</span>
+    <a href="#" class="next">다음</a>
+    <a href="#" class="last">마지막</a>
+  </div>
+  <div class="write-btn">
+    <a th:href="@{/boards/new}">게시글 작성</a>
+  </div>
+</div>
+</body>
+</html>

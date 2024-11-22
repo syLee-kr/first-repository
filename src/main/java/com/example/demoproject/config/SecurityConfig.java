@@ -1,5 +1,8 @@
 package com.example.demoproject.config;
 
+import com.example.demoproject.CustomAuthenticationSuccessHandler;
+import com.example.demoproject.service.MemberService;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,12 +18,28 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @Configuration
 public class SecurityConfig {
 
+    private final ObjectProvider<MemberService> memberServiceProvider;
+
+    public SecurityConfig(ObjectProvider<MemberService> memberServiceProvider) {
+        this.memberServiceProvider = memberServiceProvider;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        CustomAuthenticationSuccessHandler successHandler = customAuthenticationSuccessHandler();
+
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/js/**", "/images/**", "/error").permitAll() // 정적 리소스 허용
-                        .anyRequest().permitAll() // 나머지는 허용
+                        .requestMatchers("/uploads/**", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/api/posts/**").hasRole("USER")
+                        .requestMatchers("/main").authenticated()
+                        .anyRequest().permitAll()
+                )
+                .formLogin(login -> login
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/main", true)
+                        .successHandler(successHandler)
+                        .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
@@ -31,21 +50,25 @@ public class SecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 );
 
-
         return http.build();
+    }
+
+    @Bean
+    public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler() {
+        return new CustomAuthenticationSuccessHandler(memberServiceProvider);
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails user = User.builder()
                 .username("tjdduq")
-                .password(passwordEncoder().encode("Az852963!@"))  // 암호화된 비밀번호 사용
+                .password(passwordEncoder().encode("Az852963!@"))
                 .roles("USER")
                 .build();
 
         UserDetails admin = User.builder()
                 .username("admin")
-                .password(passwordEncoder().encode("admin"))  // 암호화된 비밀번호 사용
+                .password(passwordEncoder().encode("admin"))
                 .roles("ADMIN")
                 .build();
 
@@ -54,6 +77,6 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();  // BCryptPasswordEncoder 비밀번호 암호화
+        return new BCryptPasswordEncoder();
     }
 }

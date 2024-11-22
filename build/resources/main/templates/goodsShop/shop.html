@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>샵 페이지</title>
+    <!-- 필요한 CSS 파일 포함 -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/shop.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/upload.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/menu-sidebar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main-container.css}">
+</head>
+<body>
+<div class="layout-container">
+    <!-- 메뉴 사이드바 포함 -->
+    <div class="menu_sidebar" th:insert="~{menu_sidebar :: menu_sidebar}"></div>
+    <!-- 메인 컨텐츠 영역 -->
+    <div id="main-container" class="main-container">
+        <div id="goods-container" class="goods-container">
+            <div th:if="${#lists.isEmpty(goodsList)}">
+                <p>상품이 없습니다.</p>
+            </div>
+            <div th:each="goods : ${goodsList}" class="goods-item">
+                <div class="goods-header">
+                    <span th:text="${goods.goodsName}">Goods Name</span>
+                </div>
+                <div class="goods-image">
+                    <img th:src="@{${goods.goods_image}}" th:alt="${goods.goodsName} + ' 이미지'" alt="Goods Image">
+                </div>
+                <div class="goods-description">
+                    <span th:text="${goods.goodsDesc}">Goods description</span>
+                </div>
+                <div class="goods-price">
+                    <span class="price-value" th:text="${goods.price}">0</span> 원
+                </div>
+                <div class="goods-footer">
+                    <form th:action="@{/api/goods/{goodsId}/purchase(goodsId=${goods.gseq})}" method="post">
+                        <button type="submit" class="purchase-button">
+                            구매하기
+                        </button>
+                    </form>
+                    <span class="quantity-info">재고: <span th:text="${goods.quantity ?: 0}">0</span>개</span>
+                </div>
+            </div>
+        </div>
+        <div id="loading" style="display: none; text-align: center; padding: 20px;">
+            <p>Loading more goods...</p>
+        </div>
+    </div>
+</div>
+<!-- 필요한 JavaScript 파일 포함 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- 기타 필요한 스크립트 추가 -->
+</body>
+</html>

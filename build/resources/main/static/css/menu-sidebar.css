@@ -1,0 +1,89 @@
+@font-face {
+    font-family: 'TTHakgyoansimSamulhamR';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_keris@1.0/TTHakgyoansimSamulhamR.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    height: 100%;
+    width: 100px;
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #5c5c5c;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+h1 {
+    position: absolute;
+    font-family: 'TTHakgyoansimSamulhamR';
+    left: 70px;
+    bottom: 50px;
+    font-size: 35px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+}
+
+.sidebar {
+    width: 240px;
+    background-color: #000;
+    color: #fff;
+    height: 100vh;
+    padding: 20px;
+}
+
+.sidebar .logo {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.sidebar ul.menu {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul.menu li {
+    margin-bottom: 20px;
+}
+
+.sidebar ul.menu li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar ul.menu li a .icon {
+    margin-right: 10px;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.menu .icon img {
+    filter: invert(1);
+    width: 24px;  /* 원하는 너비로 설정 */
+    height: 24px; /* 원하는 높이로 설정 */
+}
+
+
+
+.searchMain {
+    background-color: #ffffff; /* 배경색 (원하는 경우) */
+    border-radius: 15px; /* 모서리 둥글게 */
+    width: 200px;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    outline: none;
+}

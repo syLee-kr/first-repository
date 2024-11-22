@@ -62,12 +62,12 @@
     <div class="subMain">
         <form th:action="@{/joinOk}" method="post" th:object="${user}" onsubmit="return validatePasswords()">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <h1><a th:href="@{/login}">Pocket polio</a></h1>
+            <h1><a th:href="@{/main}">Pocket polio</a></h1>
             <p class="subtitle">회원가입</p>
 
             <div class="id">
                 <label for="id">아이디</label>
-                <input type="text" id="id" th:field="*{id}" placeholder="아이디" required>
+                <input type="text" id="id" th:field="*{username}" placeholder="아이디" required>
                 <div id="idCheckMessage"></div> <!-- 아이디 중복 여부 메시지 표시 -->
             </div>
 
@@ -77,13 +77,23 @@
             </div>
 
             <div class="pwd2">
-                <label for="pwd2"></label>
+                <label for="pwd2">비밀번호 확인</label>
                 <input type="password" id="pwd2" placeholder="비밀번호 확인" required>
+            </div>
+
+            <div class="name">
+                <label for="name">이름</label>
+                <input type="text" id="name" th:field="*{name}" placeholder="이름" required>
+            </div>
+
+            <!--<div class="birthday">
+                <label for="birthday">생일</label>
+                <input type="date" id="birthday" th:field="*{birthday}" required>
             </div>
 
             <div class="email">
                 <label for="email">이메일</label>
-                <input type="text" id="email" th:field="*{email}" placeholder="abc@def.com">
+                <input type="email" id="email" th:field="*{email}" placeholder="abc@def.com" required>
             </div>
 
             <div class="phone">
@@ -93,6 +103,16 @@
                     <input type="button" value="인증요청" onclick="@{}">
                 </div>
             </div>
+
+            <div class="address">
+                <label for="address">주소</label>
+                <input type="text" id="address" th:field="*{address}" placeholder="주소" required>
+            </div>
+
+            <div class="profileImage">
+                <label for="profileImage">프로필 이미지</label>
+                <input type="file" id="profileImage" th:field="*{profileImage}">
+            </div>-->
 
             <div id="guide" style="color:#999;display:none"></div>
 

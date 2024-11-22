@@ -33,4 +33,7 @@ public class Member {
 
     @Column(columnDefinition = "varchar2(255) default 'images/default.png'")
     private String profileImage;   //  프로필 이미지
+
+    @Column(nullable = false, columnDefinition = "varchar(255) default 'ROLE_USER'")
+    private String role;
 }

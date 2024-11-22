@@ -1,0 +1,24 @@
+<!-- modal.html -->
+<div th:fragment="upload">
+    <div class="modal-background" id="modalBackground" style="display: none;">
+        <div class="modal">
+            <h2>새 게시물 작성</h2>
+            <form th:action="@{/api/posts/create}" method="post">
+                <div class="form-group">
+                    <label for="title">제목</label>
+                    <input type="text" id="title" name="title" placeholder="제목을 입력하세요" required>
+                </div>
+                <div class="form-group">
+                    <label for="content">본문</label>
+                    <textarea id="content" name="content" placeholder="내용을 입력하세요" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="imagePath">이미지 URL</label>
+                    <input type="text" id="imagePath" name="imagePath" placeholder="이미지 URL을 입력하세요">
+                </div>
+                <button type="submit">게시</button>
+                <button type="button" class="close-btn" onclick="closeModal()">닫기</button>
+            </form>
+        </div>
+    </div>
+</div>

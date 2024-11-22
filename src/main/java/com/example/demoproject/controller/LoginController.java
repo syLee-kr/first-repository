@@ -19,12 +19,8 @@ import java.util.Map;
 @Controller
 public class LoginController {
 
-    private final MemberService ms;
-
     @Autowired
-    public LoginController(MemberService ms) {
-        this.ms = ms;
-    }
+    private MemberService ms;
 
     @GetMapping("/login")
     public String loginView(HttpSession session) {
@@ -32,28 +28,7 @@ public class LoginController {
         if (session.getAttribute("user") != null) {
             return "redirect:/main";
         }
-        return "login/loginForm";
-    }
-
-    @PostMapping("/login")
-    public String loginSubmit(Member vo, HttpSession session, Model model) {
-        System.out.println("로그인 시도: " + vo.getId());
-        boolean isLoginSuccess = ms.loginId(vo);
-
-        if (isLoginSuccess) {
-            // 로그인 성공 시 세션에 사용자 정보를 저장
-            session.setAttribute("user", vo);
-
-            // CSRF 토큰 재생성
-            SecurityContextHolder.getContext().setAuthentication(
-                    new UsernamePasswordAuthenticationToken(vo.getId(), vo.getPwd())
-            );
-
-            return "redirect:/main";  // 로그인 성공 시 메인 페이지로 리디렉션
-        } else {
-            model.addAttribute("loginFail", true);  // 로그인 실패 여부 추가
-            return "login/loginForm";  // 실패 시 뷰 이름 반환하여 모델 속성 유지
-        }
+        return "login/loginForm";  // 로그인 폼 템플릿
     }
 
     @GetMapping("/join")
@@ -64,7 +39,7 @@ public class LoginController {
 
     @GetMapping("/check-duplicate-id")
     public ResponseEntity<Map<String, Boolean>> checkDuplicateId(@RequestParam String userId) {
-        boolean exists = ms.confirmId(userId);
+        boolean exists = ms.confirmUsername(userId);
         Map<String, Boolean> response = new HashMap<>();
         response.put("exists", exists);
         return ResponseEntity.ok(response);
